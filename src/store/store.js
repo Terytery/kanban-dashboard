@@ -4,9 +4,41 @@ import Vuex from 'vuex'
 Vue.use(Vuex)
 
 export const store = new Vuex.Store({
-    state: {
-
+  state: {
+    projects: {
+      id: '',
+      name: '',
+      dateStart: '',
+      dateEnd: '',
+      githubRepoLink: '',
+      users: [],
+      tasks: [
+        {
+          id: '',
+          name: '',
+          description: '',
+          date: '',
+          priority: ''
+        },
+      ],
     },
-    actions: {},
-    mutations: {}
+
+    users: {
+      id: '',
+      email: '',
+      profilePicture: '',
+      username: '',
+      description: '',
+    },
+
+  },
+  actions: {
+    getProjects() { },
+    getProject() { },
+    deleteProject() { },
+    addUserToProject() { },
+    deleteUserToProject() { },
+
+  },
+  mutations: {}
 })
