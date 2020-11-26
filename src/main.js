@@ -2,7 +2,8 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 import App from './App.vue'
 import vuetify from './plugins/vuetify'
-import { store } from './store/store';
+import { store } from './store/store'
+import './firebase'
 
 Vue.config.productionTip = false
 Vue.use(Vuex)
