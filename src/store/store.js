@@ -5,42 +5,41 @@ import { db } from "../firebase"
 
 Vue.use(Vuex)
 
+export const GET_PROJECTS = 'GET_PROJECTS'
+export const CREATE_PROJECT = 'CREATE_PROJECT'
+
 export const store = new Vuex.Store({
   state: {
-    projects: {
-      id: '',
-      name: '',
-      dateStart: '',
-      dateEnd: '',
-      githubRepoLink: '',
-      users: [],
-      tasks: [
-        {
-          id: '',
-          name: '',
-          description: '',
-          date: '',
-          priority: ''
-        },
-      ],
-    },
-
-    users: {
-      id: '',
-      email: '',
-      profilePicture: '',
-      username: '',
-      description: '',
-    },
-
+    projects: [],
+    users: []
   },
   actions: {
-    getProjects() { },
+    getProjects({ commit }) {
+      db.collection("projects").onSnapshot(querySnapshot => {
+        let projectsArray = []
+
+        querySnapshot.forEach(doc => {
+          let project = doc.data()
+          project.id = doc.id
+          projectsArray.push(project)
+        })
+        commit(GET_PROJECTS, projectsArray)
+      })
+    },
     getProject() { },
     deleteProject() { },
     addUserToProject() { },
     deleteUserToProject() { },
 
   },
-  mutations: {}
+  mutations: {
+    [GET_PROJECTS](state, payload) {
+      state.projects = payload
+    },
+
+    [CREATE_PROJECT](state, payload) {
+      state.projects = payload
+    }
+
+  }
 })
