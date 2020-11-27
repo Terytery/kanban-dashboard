@@ -1,6 +1,6 @@
 <template>
   <v-row justify="center">
-    <v-dialog v-model="dialog" persistent max-width="600px">
+    <v-dialog v-model="modalAddProject" persistent max-width="600px">
       <template v-slot:activator="{ on, attrs }">
         <v-btn color="primary" dark v-bind="attrs" v-on="on"> New </v-btn>
         <v-container>
@@ -61,8 +61,7 @@
           <small>*Champs obligatoire</small>
         </v-card-text>
         <v-card-actions>
-          <v-spacer></v-spacer>
-          <v-btn color="blue darken-1" text @click="dialog = false">
+          <v-btn color="blue darken-1" text @click="modalAddProject = false">
             Fermer
           </v-btn>
           <v-btn color="blue darken-1" text @click="createProject">
@@ -87,6 +86,7 @@ export default {
     dateEnd: "",
     type: "",
     githubRepoLink: "",
+    modalAddProject: false,
   }),
   mounted() {
     this.$store.dispatch("getProjects");
@@ -105,6 +105,7 @@ export default {
         githubRepoLink: this.githubRepoLink,
       };
       db.collection("projects").add(project);
+      this.modalAddProject = false;
     },
   },
 };
