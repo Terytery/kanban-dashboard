@@ -57,10 +57,17 @@
 </template>
 
 <script>
+import { mapState } from "vuex";
+
 export default {
   name: "ProjectList",
-
   data: () => ({}),
+  mounted() {
+    this.$store.dispatch("getProjects");
+  },
+  computed: {
+    ...mapState(["projects"])
+  }
 };
 </script>
 
