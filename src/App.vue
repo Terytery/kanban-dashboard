@@ -3,23 +3,23 @@
     <!-- nav bar -->
 
     <v-main>
-      <ProjectContainer />
+      <AddProjectContainer />
     </v-main>
   </v-app>
 </template>
 
 <script>
-import ProjectContainer from "./containers/ProjectContainer";
+import AddProjectContainer from "./containers/AddProjectContainer";
 
 export default {
   name: "App",
 
   components: {
-    ProjectContainer
+    AddProjectContainer,
   },
 
   data: () => ({
     //
-  })
+  }),
 };
 </script>
