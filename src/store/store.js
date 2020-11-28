@@ -6,12 +6,13 @@ import { db } from "../firebase"
 Vue.use(Vuex)
 
 export const GET_PROJECTS = 'GET_PROJECTS'
-export const CREATE_PROJECT = 'CREATE_PROJECT'
+export const SET_CURRENT_PROJECT = 'SET_CURRENT_PROJECT'
 
 export const store = new Vuex.Store({
     state: {
         projects: [],
-        users: []
+        users: [],
+        currentProject: {}
     },
     actions: {
         getProjects({ commit }) {
@@ -27,7 +28,11 @@ export const store = new Vuex.Store({
             })
         },
 
-        getProject() { },
+        setCurrentProject({ commit }, payload) {
+            commit(SET_CURRENT_PROJECT, payload)
+        },
+
+
         deleteProject() { },
         addUserToProject() { },
         deleteUserToProject() { },
@@ -38,9 +43,9 @@ export const store = new Vuex.Store({
             state.projects = payload
         },
 
-        [CREATE_PROJECT](state, payload) {
-            state.projects = payload
-        }
+        [SET_CURRENT_PROJECT](state, payload) {
+            state.currentProject = payload
+        },
 
     }
 })

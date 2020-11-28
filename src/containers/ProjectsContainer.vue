@@ -6,12 +6,11 @@
     <ProjectList />
   </v-container>
 </template>
-
 <script>
 import ProjectList from "../components/ProjectList";
 
 export default {
-  name: "ProjectContainer",
+  name: "ProjectsContainer",
   components: {
     ProjectList,
   },

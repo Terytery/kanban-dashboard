@@ -5,6 +5,7 @@
     sort-by="dateStart"
     :sort-desc="[true]"
     hide-default-footer
+    @click:row="openProject"
   >
     <template v-slot:top>
       <v-toolbar flat>
@@ -14,8 +15,10 @@
       </v-toolbar>
     </template>
     <template v-slot:[`item.actions`]="{ item }">
-      <v-icon small class="mr-2" @click="editItem(item)"> mdi-pencil </v-icon>
-      <v-icon small @click="deleteItem(item)"> mdi-delete </v-icon>
+      <td @click.stop>
+        <v-icon small class="mr-2" @click="editItem(item)"> mdi-pencil </v-icon>
+        <v-icon small @click="deleteItem(item)"> mdi-delete </v-icon>
+      </td>
     </template>
   </v-data-table>
 </template>
@@ -52,10 +55,12 @@ export default {
   },
 
   methods: {
+    openProject(project) {
+      this.$store.dispatch("setCurrentProject", project);
+    },
     editItem(item) {
       console.log(item);
     },
-
     deleteItem(item) {
       console.log(item);
     },
