@@ -56,12 +56,8 @@
         <small>*Champs obligatoire</small>
       </v-card-text>
       <v-card-actions>
-        <v-btn color="blue darken-1" text @click="modalAddProject = false">
-          Fermer
-        </v-btn>
-        <v-btn color="blue darken-1" text @click="createProject">
-          Ajouter
-        </v-btn>
+        <v-btn color="error" text @click="resetDialog"> Fermer </v-btn>
+        <v-btn color="blue" text @click="createProject"> Ajouter </v-btn>
       </v-card-actions>
     </v-card>
   </v-dialog>
@@ -90,6 +86,11 @@ export default {
     createProject() {
       db.collection("projects").add(this.project);
       this.modalAddProject = false;
+      this.project = {};
+    },
+    resetDialog() {
+      this.modalAddProject = false;
+      this.project = {};
     },
   },
 };

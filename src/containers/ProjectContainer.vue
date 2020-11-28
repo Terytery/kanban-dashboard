@@ -1,7 +1,7 @@
 <template>
   <v-container>
-    <v-row align="right" justify="space-between">
-      <t1>Liste des projets</t1>
+    <v-row justify="space-between">
+      <h1>Liste des projets</h1>
       <AddProject />
     </v-row>
     <ProjectList />

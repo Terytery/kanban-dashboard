@@ -1,20 +1,29 @@
 <template>
   <v-container>
+    <br />
+    <br />
     <v-simple-table>
       <template v-slot:default>
+        <thead>
+          <tr>
+            <th class="text-left">Nom du projet</th>
+            <th class="text-left">Date de début</th>
+            <th class="text-left">Date de fin</th>
+            <th class="text-left"></th>
+          </tr>
+        </thead>
         <tbody>
           <tr v-for="project in projects" :key="project.id">
             <td>{{ project.name }}</td>
             <td>
-              <v-row align="center" justify="end">
-                <p class="margin">{{ project.dateStart }}</p>
-                <v-btn small rounded color="primary" class="margin">
-                  Commit
-                </v-btn>
-                <v-btn small rounded color="error" class="margin">
-                  Delete
-                </v-btn>
-              </v-row>
+              <p>{{ project.dateStart }}</p>
+            </td>
+            <td>
+              <p>{{ project.dateEnd }}</p>
+            </td>
+            <td class="text-right">
+              <v-btn small rounded color="primary" class="margin">Commit</v-btn>
+              <v-btn small rounded color="error" class="margin"> Delete </v-btn>
             </td>
           </tr>
         </tbody>
