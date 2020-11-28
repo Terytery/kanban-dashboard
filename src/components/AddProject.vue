@@ -60,6 +60,7 @@
         <small>*Champs obligatoire</small>
       </v-card-text>
       <v-card-actions>
+        <v-spacer></v-spacer>
         <v-btn color="error" text @click="resetDialog"> Fermer </v-btn>
         <v-btn color="blue" text @click="createProject"> Ajouter </v-btn>
       </v-card-actions>

@@ -14,31 +14,38 @@
         <AddProject />
       </v-toolbar>
     </template>
+
     <template v-slot:[`item.actions`]="{ item }">
       <td @click.stop>
         <v-icon small class="mr-2" @click="editItem(item)"> mdi-pencil </v-icon>
+
         <v-dialog v-model="modalDeleteConfirm" width="750">
           <template v-slot:activator="{ on, attrs }">
             <v-icon small v-bind="attrs" v-on="on"> mdi-delete </v-icon>
           </template>
+
           <v-card>
             <v-card-title class="error headline">
               <b>Supprimer ce projet ?</b>
+
               <v-card-text class="color-item">
                 <b
                   >Cette action entraînera la suppression définitive de toutes
                   les données relative à ce projet.
-                </b></v-card-text
-              >
+                </b>
+              </v-card-text>
             </v-card-title>
+
             <br />
+
             <v-card-text class="text-h4">
-              <center>{{ item.name }}</center></v-card-text
-            >
+              <center>{{ item }}</center>
+            </v-card-text>
+
             <v-card-actions>
               <v-spacer></v-spacer>
 
-              <v-btn text @click="modalDeleteConfirm = false"> ANNULER </v-btn>
+              <v-btn text @click="modalDeleteConfirm = false">ANNULER</v-btn>
 
               <v-btn color="error" text @click="deleteProject(item.id)">
                 SUPPRIMER
