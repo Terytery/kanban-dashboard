@@ -1,48 +1,64 @@
 <template>
-  <v-container>
-    <br />
-    <br />
-    <v-simple-table>
-      <template v-slot:default>
-        <thead>
-          <tr>
-            <th class="text-left">Nom du projet</th>
-            <th class="text-left">Date de début</th>
-            <th class="text-left">Date de fin</th>
-            <th class="text-left"></th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr v-for="project in projects" :key="project.id">
-            <td>{{ project.name }}</td>
-            <td>
-              <p>{{ project.dateStart }}</p>
-            </td>
-            <td>
-              <p>{{ project.dateEnd }}</p>
-            </td>
-            <td class="text-right">
-              <v-btn small rounded color="primary" class="margin">Commit</v-btn>
-              <v-btn small rounded color="error" class="margin"> Delete </v-btn>
-            </td>
-          </tr>
-        </tbody>
-      </template>
-    </v-simple-table>
-  </v-container>
+  <v-data-table
+    :headers="headers"
+    :items="projects"
+    sort-by="dateStart"
+    :sort-desc="[true]"
+    hide-default-footer
+  >
+    <template v-slot:top>
+      <v-toolbar flat>
+        <v-toolbar-title>Liste des projets</v-toolbar-title>
+        <v-spacer></v-spacer>
+        <AddProject />
+      </v-toolbar>
+    </template>
+    <template v-slot:[`item.actions`]="{ item }">
+      <v-icon small class="mr-2" @click="editItem(item)"> mdi-pencil </v-icon>
+      <v-icon small @click="deleteItem(item)"> mdi-delete </v-icon>
+    </template>
+  </v-data-table>
 </template>
 
 <script>
+import AddProject from "../components/AddProject";
 import { mapState } from "vuex";
 
 export default {
   name: "ProjectList",
-  data: () => ({}),
+  components: {
+    AddProject,
+  },
+  data: () => ({
+    dialog: false,
+    dialogDelete: false,
+    headers: [
+      {
+        text: "Nom des projets",
+        align: "start",
+        value: "name",
+      },
+      { text: "Date de départ", value: "dateStart" },
+      { text: "Date de fin", value: "dateEnd" },
+      { text: "Actions", value: "actions", sortable: false },
+    ],
+  }),
   mounted() {
     this.$store.dispatch("getProjects");
   },
+
   computed: {
     ...mapState(["projects"]),
+  },
+
+  methods: {
+    editItem(item) {
+      console.log(item);
+    },
+
+    deleteItem(item) {
+      console.log(item);
+    },
   },
 };
 </script>
