@@ -40,12 +40,7 @@
 
               <v-btn text @click="modalDeleteConfirm = false"> ANNULER </v-btn>
 
-              <v-btn
-                color="error"
-                text
-                :disabled="invalid"
-                @click="deleteProject(item.id)"
-              >
+              <v-btn color="error" text @click="deleteProject(item.id)">
                 SUPPRIMER
               </v-btn>
             </v-card-actions>
@@ -97,7 +92,9 @@ export default {
     },
     deleteProject(item) {
       this.modalDeleteConfirm = false;
-      db.collection("projects").doc(item).delete();
+      db.collection("projects")
+        .doc(item)
+        .delete();
     }
   }
 };
