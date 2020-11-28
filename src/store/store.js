@@ -27,16 +27,9 @@ export const store = new Vuex.Store({
                 commit(GET_PROJECTS, projectsArray)
             })
         },
-
         setCurrentProject({ commit }, payload) {
             commit(SET_CURRENT_PROJECT, payload)
         },
-
-
-        deleteProject() { },
-        addUserToProject() { },
-        deleteUserToProject() { },
-
     },
     mutations: {
         [GET_PROJECTS](state, payload) {
