@@ -2,11 +2,14 @@
   <v-dialog v-model="modalAddProject" max-width="600px">
     <template v-slot:activator="{ on, attrs }">
       <v-btn
-        color="success"
+        color="blue"
         v-bind="attrs"
         v-on="on"
         @click="modalAddProject = true"
-        ><v-icon left> mdi-pencil </v-icon> New
+        fab
+        small
+        elevation="0"
+        ><v-icon> mdi-plus </v-icon>
       </v-btn>
     </template>
     <v-card>

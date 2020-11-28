@@ -1,6 +1,6 @@
 <template>
   <v-container>
-    <h1 class="text-center">ProjectName</h1>
+    <h1 class="text-center">{{ currentProject.name }}</h1>
 
     <p class="overline text-center">Tasks list</p>
 
@@ -14,7 +14,7 @@
       <TaskList :title="tasksDone.title" :tasks="tasksDone" />
     </v-row>
 
-    <v-btn fab fixed dark small color="blue" right bottom>
+    <v-btn fab fixed dark color="blue" right bottom>
       <v-icon>mdi-card-plus</v-icon>
     </v-btn>
   </v-container>
@@ -22,6 +22,7 @@
 
 <script>
 import TaskList from "../components/TaskList";
+import { mapState } from "vuex";
 
 export default {
   name: "KanbanDashboard",
@@ -45,6 +46,9 @@ export default {
       title: "DONE",
       name: "Gracias"
     }
-  })
+  }),
+  computed: {
+    ...mapState(["currentProject"])
+  }
 };
 </script>
