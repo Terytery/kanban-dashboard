@@ -3,7 +3,7 @@
     <v-list class="tasks-list" outlined>
       <v-subheader>{{ title }}</v-subheader>
 
-      <v-card v-for="n in 3" :key="n" class="mx-auto task">
+      <v-card v-for="n in 5" :key="n" class="mx-auto task">
         <v-list-item three-line>
           <v-list-item-content>
             <div class="overline mb-4">
@@ -18,7 +18,9 @@
             >
           </v-list-item-content>
 
-          <v-list-item-avatar tile size="30" color="grey"></v-list-item-avatar>
+          <v-list-item-avatar size="30" color="grey">
+            <span class="white--text body-2">RB</span>
+          </v-list-item-avatar>
         </v-list-item>
       </v-card>
     </v-list>

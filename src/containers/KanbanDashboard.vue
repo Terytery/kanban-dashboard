@@ -9,6 +9,8 @@
 
       <TasksList title="IN PROGRESS" tasks="Bonjour" />
 
+      <TasksList title="IN TEST" tasks="Halo" />
+
       <TasksList title="DONE" tasks="Gracias" />
     </v-row>
   </v-container>
