@@ -1,7 +1,7 @@
 <template>
   <v-app>
     <v-main>
-      <ProjectContainer v-if="false" />
+      <ProjectsContainer />
 
       <KanbanDashboard />
     </v-main>
@@ -9,14 +9,14 @@
 </template>
 
 <script>
-import ProjectContainer from "./containers/ProjectContainer";
+import ProjectsContainer from "./containers/ProjectsContainer";
 import KanbanDashboard from "./containers/KanbanDashboard";
 
 export default {
   name: "App",
 
   components: {
-    ProjectContainer,
+    ProjectsContainer,
     KanbanDashboard
   },
 

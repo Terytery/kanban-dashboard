@@ -6,6 +6,8 @@ import { store } from './store/store'
 import { longClickDirective } from 'vue-long-click'
 import './firebase'
 
+import './assets/css/global.css'
+
 Vue.config.productionTip = false
 Vue.use(Vuex)
 
