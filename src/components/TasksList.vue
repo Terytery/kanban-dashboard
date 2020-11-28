@@ -3,7 +3,13 @@
     <v-list class="tasks-list" outlined>
       <v-subheader>{{ title }}</v-subheader>
 
-      <v-card v-for="n in 5" :key="n" class="mx-auto task">
+      <v-card
+        v-for="n in 5"
+        :key="n"
+        class="mx-auto task"
+        @click="editTask"
+        v-longclick="dragOn"
+      >
         <v-list-item three-line>
           <v-list-item-content>
             <div class="overline mb-4">
@@ -30,10 +36,23 @@
 <script>
 export default {
   name: "TasksList",
-  data: () => ({}),
+  data: () => ({
+    draggingElement: false
+  }),
   props: {
     title: String,
     tasks: String
+  },
+  methods: {
+    dragOn() {
+      this.draggingElement = true;
+      console.log("Drag and drop");
+    },
+    editTask() {
+      if (!this.draggingElement) {
+        console.log("Edit");
+      }
+    }
   }
 };
 </script>
@@ -52,5 +71,9 @@ export default {
   box-shadow: none !important;
   border-top: thin solid rgba(255, 255, 255, 0.12);
   border-radius: 0 !important;
+}
+
+.task:hover {
+  background-color: #333;
 }
 </style>
