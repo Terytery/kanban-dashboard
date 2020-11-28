@@ -15,11 +15,11 @@ export default {
   name: "App",
 
   components: {
-    ProjectsContainer,
+    ProjectsContainer
   },
 
   data: () => ({
     //
-  }),
+  })
 };
 </script>

@@ -30,7 +30,7 @@ import { mapState } from "vuex";
 export default {
   name: "ProjectList",
   components: {
-    AddProject,
+    AddProject
   },
   data: () => ({
     dialog: false,
@@ -39,19 +39,19 @@ export default {
       {
         text: "Nom des projets",
         align: "start",
-        value: "name",
+        value: "name"
       },
       { text: "Date de départ", value: "dateStart" },
       { text: "Date de fin", value: "dateEnd" },
-      { text: "Actions", value: "actions", sortable: false },
-    ],
+      { text: "Actions", value: "actions", sortable: false }
+    ]
   }),
   mounted() {
     this.$store.dispatch("getProjects");
   },
 
   computed: {
-    ...mapState(["projects"]),
+    ...mapState(["projects"])
   },
 
   methods: {
@@ -63,8 +63,8 @@ export default {
     },
     deleteItem(item) {
       console.log(item);
-    },
-  },
+    }
+  }
 };
 </script>
 

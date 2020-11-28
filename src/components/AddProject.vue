@@ -75,9 +75,9 @@ export default {
       dateStart: "",
       dateEnd: "",
       type: "",
-      githubRepoLink: "",
+      githubRepoLink: ""
     },
-    modalAddProject: false,
+    modalAddProject: false
   }),
   mounted() {
     this.$store.dispatch("getProjects");
@@ -91,7 +91,7 @@ export default {
     resetDialog() {
       this.modalAddProject = false;
       this.project = {};
-    },
-  },
+    }
+  }
 };
 </script>
