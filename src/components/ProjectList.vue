@@ -1,61 +1,62 @@
 <template>
-  <v-data-table
-    :headers="headers"
-    :items="projects"
-    sort-by="dateStart"
-    :sort-desc="[true]"
-    hide-default-footer
-    @click:row="openProject"
-  >
-    <template v-slot:top>
-      <v-toolbar flat>
-        <v-toolbar-title>Liste des projets</v-toolbar-title>
-        <v-spacer></v-spacer>
-        <AddProject />
-      </v-toolbar>
-    </template>
+  <div>
+    <v-data-table
+      :headers="headers"
+      :items="projects"
+      sort-by="dateStart"
+      :sort-desc="[true]"
+      hide-default-footer
+      @click:row="openProject"
+    >
+      <template v-slot:top>
+        <v-toolbar flat>
+          <v-toolbar-title>Liste des projets</v-toolbar-title>
+          <v-spacer></v-spacer>
+          <AddProject />
+        </v-toolbar>
+      </template>
 
-    <template v-slot:[`item.actions`]="{ item }">
-      <td @click.stop>
-        <v-icon small class="mr-2" @click="editItem(item)"> mdi-pencil </v-icon>
+      <template v-slot:[`item.actions`]="{ item }">
+        <td @click.stop>
+          <v-icon small class="mr-2" @click="editProject(item)">
+            mdi-pencil
+          </v-icon>
+          <v-icon small @click="confirmDelete(item)"> mdi-delete</v-icon>
+        </td>
+      </template>
+    </v-data-table>
 
-        <v-dialog v-model="modalDeleteConfirm" width="750">
-          <template v-slot:activator="{ on, attrs }">
-            <v-icon small v-bind="attrs" v-on="on"> mdi-delete </v-icon>
-          </template>
+    <v-dialog v-model="modalDeleteConfirm" width="750">
+      <v-card>
+        <v-card-title class="error headline">
+          <b>Supprimer ce projet ?</b>
 
-          <v-card>
-            <v-card-title class="error headline">
-              <b>Supprimer ce projet ?</b>
+          <v-card-text class="color-item">
+            <b
+              >Cette action entraînera la suppression définitive de toutes les
+              données relative à ce projet.
+            </b>
+          </v-card-text>
+        </v-card-title>
 
-              <v-card-text class="color-item">
-                <b
-                  >Cette action entraînera la suppression définitive de toutes
-                  les données relative à ce projet.
-                </b>
-              </v-card-text>
-            </v-card-title>
+        <br />
 
-            <br />
+        <v-card-text class="text-h4">
+          <center>{{ projectToDelete.name }}</center>
+        </v-card-text>
 
-            <v-card-text class="text-h4">
-              <center>{{ item }}</center>
-            </v-card-text>
+        <v-card-actions>
+          <v-spacer></v-spacer>
 
-            <v-card-actions>
-              <v-spacer></v-spacer>
+          <v-btn text @click="modalDeleteConfirm = false">ANNULER</v-btn>
 
-              <v-btn text @click="modalDeleteConfirm = false">ANNULER</v-btn>
-
-              <v-btn color="error" text @click="deleteProject(item.id)">
-                SUPPRIMER
-              </v-btn>
-            </v-card-actions>
-          </v-card>
-        </v-dialog>
-      </td>
-    </template>
-  </v-data-table>
+          <v-btn color="error" text @click="deleteProject(projectToDelete.id)">
+            SUPPRIMER
+          </v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
+  </div>
 </template>
 
 
@@ -80,7 +81,8 @@ export default {
       { text: "Date de fin", value: "dateEnd" },
       { text: "Actions", value: "actions", sortable: false }
     ],
-    modalDeleteConfirm: false
+    modalDeleteConfirm: false,
+    projectToDelete: {}
   }),
   mounted() {
     this.$store.dispatch("getProjects");
@@ -94,8 +96,12 @@ export default {
     openProject(project) {
       this.$store.dispatch("setCurrentProject", project);
     },
-    editItem(item) {
+    editProject(item) {
       console.log(item);
+    },
+    confirmDelete(item) {
+      this.projectToDelete = item;
+      this.modalDeleteConfirm = true;
     },
     deleteProject(item) {
       this.modalDeleteConfirm = false;
