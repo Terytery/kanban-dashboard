@@ -5,6 +5,8 @@ import vuetify from './plugins/vuetify'
 import { store } from './store/store'
 import './firebase'
 
+import './assets/css/global.css'
+
 Vue.config.productionTip = false
 Vue.use(Vuex)
 
