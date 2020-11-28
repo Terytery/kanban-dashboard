@@ -1,5 +1,9 @@
 <template>
   <v-container>
+    <h1 class="text-center">ProjectName</h1>
+
+    <p class="overline text-center">Tasks list</p>
+
     <v-row>
       <TasksList title="TO DO" tasks="Salut" />
 

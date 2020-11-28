@@ -1,12 +1,26 @@
 <template>
   <v-col>
-    <v-list>
-      <h3 class="text-center">{{ title }}</h3>
-      <v-list-item-group>
-        <v-list-item v-for="n in 3" :key="n" cols="12" md="4">
-          <v-card>{{ tasks }}</v-card>
+    <v-list class="tasks-list" outlined>
+      <v-subheader>{{ title }}</v-subheader>
+
+      <v-card v-for="n in 3" :key="n" class="mx-auto task">
+        <v-list-item three-line>
+          <v-list-item-content>
+            <div class="overline mb-4">
+              5 pts
+            </div>
+            <v-list-item-title class="headline mb-1">
+              {{ tasks }}
+            </v-list-item-title>
+            <v-list-item-subtitle
+              >Greyhound divisely hello coldly
+              fonwderfully</v-list-item-subtitle
+            >
+          </v-list-item-content>
+
+          <v-list-item-avatar tile size="30" color="grey"></v-list-item-avatar>
         </v-list-item>
-      </v-list-item-group>
+      </v-card>
     </v-list>
   </v-col>
 </template>
@@ -21,3 +35,20 @@ export default {
   }
 };
 </script>
+
+<style scoped>
+.tasks-list {
+  height: 100%;
+  border-radius: 10px;
+}
+
+.v-subheader {
+  justify-content: center;
+}
+
+.task {
+  box-shadow: none !important;
+  border-top: thin solid rgba(255, 255, 255, 0.12);
+  border-radius: 0 !important;
+}
+</style>
