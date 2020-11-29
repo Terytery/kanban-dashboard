@@ -130,7 +130,10 @@ export default {
       { text: "Date de fin", value: "dateEnd" },
       { text: "Actions", value: "actions", sortable: false }
     ],
-    nameRules: [(v) => !!v || "Le nom est obligatoire"],
+    nameRules: [
+      (v) => !!v || "Le nom est obligatoire",
+      (v) => /\w/.test(v) || "Le nom est invalide"
+    ],
     dateDebRules: [(v) => !!v || "La date est obligatoire"],
     modalDeleteConfirm: false,
     modalEditProject: false,

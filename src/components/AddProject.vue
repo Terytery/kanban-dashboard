@@ -67,7 +67,10 @@ import { db } from "../firebase";
 export default {
   name: "AddProjectList",
   data: () => ({
-    nameRules: [(v) => !!v || "Le nom est obligatoire"],
+    nameRules: [
+      (v) => !!v || "Le nom est obligatoire",
+      (v) => /\w/.test(v) || "Le nom est invalide"
+    ],
     dateDebRules: [(v) => !!v || "La date est obligatoire"],
     project: {
       name: "",
