@@ -2,13 +2,18 @@
   <v-col>
     <v-list class="task-list" outlined>
       <v-subheader>{{ title }}</v-subheader>
-      <TaskItem v-for="task in tasks" v-bind:key="task.id" :task="task" />
+      <TaskItem
+        v-for="task in orderedTasks"
+        v-bind:key="task.id"
+        :task="task"
+      />
     </v-list>
   </v-col>
 </template>
 
 <script>
 import TaskItem from "../components/TaskItem";
+import _ from "lodash";
 
 export default {
   name: "TaskList",
@@ -22,6 +27,11 @@ export default {
   props: {
     title: String,
     tasks: Array
+  },
+  computed: {
+    orderedTasks() {
+      return _.orderBy(this.tasks, "position");
+    }
   },
   methods: {
     dragOn() {
