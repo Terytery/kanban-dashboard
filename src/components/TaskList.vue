@@ -2,7 +2,7 @@
   <v-col>
     <v-list class="task-list" outlined>
       <v-subheader>{{ title }}</v-subheader>
-      <draggable group="tasks" v-model="orderedTasks">
+      <draggable group="tasks" v-model="orderedTasks" class="draggable-test">
         <TaskItem
           v-for="task in orderedTasks"
           v-bind:key="task.id"
@@ -79,5 +79,9 @@ export default {
 
 .task:hover {
   background-color: #333;
+}
+
+.draggable-test {
+  height: 100%;
 }
 </style>
