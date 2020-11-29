@@ -114,7 +114,7 @@ export default {
 </script>
 
 <style scoped>
-.margin {
-  margin: 0px 15px;
+.v-data-table {
+  cursor: pointer;
 }
 </style>
