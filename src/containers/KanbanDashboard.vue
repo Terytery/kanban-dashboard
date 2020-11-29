@@ -9,13 +9,17 @@
     <p class="overline text-center">Liste des tâches</p>
 
     <v-row>
-      <TaskList title="TO DO" :tasks="tasks.toDo" />
+      <TaskList title="TO DO" category="toDo" :tasks="tasks.toDo" />
 
-      <TaskList title="IN PROGRESS" :tasks="tasks.inProgress" />
+      <TaskList
+        title="IN PROGRESS"
+        category="inProgress"
+        :tasks="tasks.inProgress"
+      />
 
-      <TaskList title="IN TEST" :tasks="tasks.inTest" />
+      <TaskList title="IN TEST" category="inTest" :tasks="tasks.inTest" />
 
-      <TaskList title="DONE" :tasks="tasks.done" />
+      <TaskList title="DONE" category="done" :tasks="tasks.done" />
     </v-row>
 
     <v-btn @click="addTask" fab fixed dark color="blue" right bottom>
