@@ -46,7 +46,7 @@ export default {
   },
   methods: {
     returnToListProjects() {
-      this.$store.dispatch("setCurrentProject", "");
+      this.$store.dispatch("removeCurrentProject");
     },
     addTask() {
       const task = {

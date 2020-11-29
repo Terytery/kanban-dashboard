@@ -7,6 +7,7 @@ Vue.use(Vuex)
 
 export const GET_PROJECTS = 'GET_PROJECTS'
 export const SET_CURRENT_PROJECT = 'SET_CURRENT_PROJECT'
+export const REMOVE_CURRENT_PROJECT = 'REMOVE_CURRENT_PROJECT'
 export const GET_PROJECT_TASKS = 'GET_PROJECT_TASKS'
 
 export const store = new Vuex.Store({
@@ -24,8 +25,7 @@ export const store = new Vuex.Store({
                 inTest: [],
                 done: []
             }
-
-        },
+        }
     },
     actions: {
         getProjects({ commit }) {
@@ -42,6 +42,21 @@ export const store = new Vuex.Store({
         },
         setCurrentProject({ commit }, payload) {
             commit(SET_CURRENT_PROJECT, payload)
+        },
+        removeCurrentProject({ commit }) {
+            const emptyProject = {
+                id: "",
+                name: "",
+                dateStart: "",
+                dateEnd: "",
+                tasks: {
+                    toDo: [],
+                    inProgress: [],
+                    inTest: [],
+                    done: []
+                }
+            }
+            commit(REMOVE_CURRENT_PROJECT, emptyProject)
         },
         getTasksByProjectId({ commit }, payload) {
             db.collection("projects").doc(payload).collection("tasks").onSnapshot(querySnapshot => {
@@ -86,6 +101,9 @@ export const store = new Vuex.Store({
             state.currentProject.name = payload.name
             state.currentProject.dateEnd = payload.dateEnd
             state.currentProject.dateStart = payload.dateStart
+        },
+        [REMOVE_CURRENT_PROJECT](state, payload) {
+            state.currentProject = payload
         },
         [GET_PROJECT_TASKS](state, payload) {
             state.currentProject.tasks = payload
