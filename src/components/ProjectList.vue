@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <v-card elevation="0" outlined>
     <v-data-table
       :headers="headers"
       :items="projects"
@@ -104,7 +104,7 @@
         </v-card-actions>
       </v-card>
     </v-dialog>
-  </div>
+  </v-card>
 </template>
 
 
@@ -168,7 +168,7 @@ export default {
 </script>
 
 <style scoped>
-.margin {
-  margin: 0px 15px;
+.v-data-table {
+  cursor: pointer;
 }
 </style>
