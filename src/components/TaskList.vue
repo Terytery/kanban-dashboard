@@ -13,6 +13,8 @@
 
 <script>
 import TaskItem from "../components/TaskItem";
+
+import { mapState } from "vuex";
 import _ from "lodash";
 
 export default {
@@ -22,7 +24,10 @@ export default {
   },
   data: () => ({
     draggingElement: false,
-    edit: false
+    edit: false,
+    dataUser: {
+      name: ""
+    }
   }),
   props: {
     title: String,
@@ -31,7 +36,8 @@ export default {
   computed: {
     orderedTasks() {
       return _.orderBy(this.tasks, "position");
-    }
+    },
+    ...mapState(["users"])
   },
   methods: {
     dragOn() {

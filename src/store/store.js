@@ -9,6 +9,7 @@ export const GET_PROJECTS = 'GET_PROJECTS'
 export const SET_CURRENT_PROJECT = 'SET_CURRENT_PROJECT'
 export const REMOVE_CURRENT_PROJECT = 'REMOVE_CURRENT_PROJECT'
 export const GET_PROJECT_TASKS = 'GET_PROJECT_TASKS'
+export const GET_USERS = 'GET_USERS'
 
 export const store = new Vuex.Store({
     state: {
@@ -28,6 +29,18 @@ export const store = new Vuex.Store({
         }
     },
     actions: {
+        getUsers({ commit }) {
+            db.collection("users").onSnapshot(querySnapshot => {
+                let userArray = []
+
+                querySnapshot.forEach(doc => {
+                    let user = doc.data()
+                    user.id = doc.id
+                    userArray.push(user)
+                })
+                commit(GET_USERS, userArray)
+            })
+        },
         getProjects({ commit }) {
             db.collection("projects").onSnapshot(querySnapshot => {
                 let projectsArray = []
@@ -107,6 +120,9 @@ export const store = new Vuex.Store({
         },
         [GET_PROJECT_TASKS](state, payload) {
             state.currentProject.tasks = payload
+        },
+        [GET_USERS](state, payload) {
+            state.users = payload
         }
 
     }

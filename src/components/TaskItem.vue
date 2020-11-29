@@ -74,9 +74,31 @@
           <v-icon>mdi-delete</v-icon>
         </v-btn>
       </v-list-item-content>
+      <v-list-item-avatar size="30" color="grey" @click="getUsers">
+        <span class="white--text body-2"></span>
 
-      <v-list-item-avatar size="30" color="grey">
-        <span class="white--text body-2">RB</span>
+        <v-dialog v-model="modalAvatar" scrollable max-width="300px">
+          <v-card>
+            <v-card-title>Responsable ?</v-card-title>
+            <v-divider></v-divider>
+            <v-card-text>
+              <v-radio-group v-model="dialogm1" column>
+                <v-radio
+                  v-for="user in users"
+                  :key="user.id"
+                  :label="user.name"
+                ></v-radio>
+              </v-radio-group>
+            </v-card-text>
+            <v-divider></v-divider>
+            <v-card-actions>
+              <v-btn color="error" text @click="dialog = false"> FERMER </v-btn>
+              <v-btn color="blue" text @click="dialog = false">
+                SELECTIONNER
+              </v-btn>
+            </v-card-actions>
+          </v-card>
+        </v-dialog>
       </v-list-item-avatar>
     </v-list-item>
   </v-card>
@@ -91,13 +113,16 @@ export default {
   name: "TaskItem",
   data: () => ({
     draggingElement: false,
-    edit: false
+    edit: false,
+    modalAvatar: false,
+    dialogm1: ""
   }),
   props: {
     task: Object
   },
   computed: {
-    ...mapState(["currentProject"])
+    ...mapState(["currentProject"]),
+    ...mapState(["users"])
   },
   methods: {
     dragOn() {
@@ -124,6 +149,10 @@ export default {
         .collection("tasks")
         .doc(this.task.id)
         .delete();
+    },
+    getUsers() {
+      this.$store.dispatch("getUsers");
+      this.modalAvatar = true;
     }
   },
   directives: {
