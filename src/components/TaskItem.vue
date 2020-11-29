@@ -16,11 +16,11 @@
           type="text"
           auto-grow
           outlined
-          :value="task.title"
           class="task-title"
           dense
           rows="1"
           placeholder="Titre"
+          v-model="task.title"
         />
 
         <div v-show="!edit" class="task-content">
@@ -32,7 +32,7 @@
           type="text"
           auto-grow
           outlined
-          :value="task.description"
+          v-model="task.description"
           class="task-content"
           dense
           rows="1"
@@ -48,12 +48,17 @@
           type="number"
           class="overline"
           outlined
-          :value="task.points"
+          v-model="task.points"
           suffix="PTS"
           dense
         />
 
-        <v-switch v-if="edit" label="Urgent" color="red"></v-switch>
+        <v-switch
+          v-model="task.urgent"
+          v-if="edit"
+          label="Urgent"
+          color="red"
+        ></v-switch>
 
         <v-btn
           v-if="edit"
@@ -105,6 +110,12 @@ export default {
       }
     },
     saveEditing() {
+      db.collection("projects")
+        .doc(this.currentProject.id)
+        .collection("tasks")
+        .doc(this.task.id)
+        .set(this.task);
+
       this.edit = false;
     },
     deleteTask() {
