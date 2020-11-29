@@ -28,49 +28,50 @@
 
     <v-dialog v-model="modalEditProject" width="600px">
       <v-card>
-        <v-card-title>
-          <span class="headline">Modifier le projet</span>
-        </v-card-title>
-        <v-card-text>
-          <v-container>
-            <v-row>
-              <v-col cols="12" sm="6" md="4">
-                <v-text-field
-                  v-model="projectToEdit.name"
-                  label="Nom du projet*"
-                  type="text"
-                  required
-                  hide-details="auto"
-                ></v-text-field>
-              </v-col>
-              <v-col cols="12" sm="6" md="4">
-                <v-text-field
-                  v-model="projectToEdit.dateStart"
-                  label="Date de début*"
-                  type="date"
-                  required
-                ></v-text-field>
-              </v-col>
-              <v-col cols="12" sm="6" md="4">
-                <v-text-field
-                  v-model="projectToEdit.dateEnd"
-                  label="Date de fin"
-                  type="date"
-                ></v-text-field>
-              </v-col>
-            </v-row>
-          </v-container>
-          <small>*Champs obligatoire</small>
-        </v-card-text>
-        <v-card-actions>
-          <v-spacer></v-spacer>
-          <v-btn color="error" text @click="modalEditProject = false">
-            Fermer
-          </v-btn>
-          <v-btn color="blue" text @click="editProject(projectToEdit)">
-            Modifier
-          </v-btn>
-        </v-card-actions>
+        <v-form ref="form" lazy-validation>
+          <v-card-title>
+            <span class="headline">Modifier le projet</span>
+          </v-card-title>
+          <v-card-text>
+            <v-container>
+              <v-row>
+                <v-col cols="12" sm="6" md="4">
+                  <v-text-field
+                    v-model="projectToEdit.name"
+                    label="Nom du projet*"
+                    type="text"
+                    :rules="nameRules"
+                  ></v-text-field>
+                </v-col>
+                <v-col cols="12" sm="6" md="4">
+                  <v-text-field
+                    v-model="projectToEdit.dateStart"
+                    label="Date de début*"
+                    type="date"
+                    :rules="dateDebRules"
+                  ></v-text-field>
+                </v-col>
+                <v-col cols="12" sm="6" md="4">
+                  <v-text-field
+                    v-model="projectToEdit.dateEnd"
+                    label="Date de fin"
+                    type="date"
+                  ></v-text-field>
+                </v-col>
+              </v-row>
+            </v-container>
+            <small>*Champs obligatoire</small>
+          </v-card-text>
+          <v-card-actions>
+            <v-spacer></v-spacer>
+            <v-btn color="error" text @click="modalEditProject = false">
+              Fermer
+            </v-btn>
+            <v-btn color="blue" text @click="editProject(projectToEdit)">
+              Modifier
+            </v-btn>
+          </v-card-actions>
+        </v-form>
       </v-card>
     </v-dialog>
 
@@ -129,6 +130,8 @@ export default {
       { text: "Date de fin", value: "dateEnd" },
       { text: "Actions", value: "actions", sortable: false }
     ],
+    nameRules: [(v) => !!v || "Le nom est obligatoire"],
+    dateDebRules: [(v) => !!v || "La date est obligatoire"],
     modalDeleteConfirm: false,
     modalEditProject: false,
     projectToEdit: {},
@@ -151,9 +154,14 @@ export default {
       this.modalEditProject = true;
     },
     editProject(item) {
-      this.modalEditProject = false;
-      this.projectToEdit = {};
-      db.collection("projects").doc(item.id).update(item);
+      if (this.$refs.form.validate()) {
+        this.$refs.form.resetValidation();
+        this.modalEditProject = false;
+        this.projectToEdit = {};
+        db.collection("projects").doc(item.id).update(item);
+      } else {
+        this.modalEditProject = true;
+      }
     },
     confirmDelete(item) {
       this.projectToDelete = item;
