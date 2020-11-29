@@ -5,10 +5,10 @@
     @click="editTask"
     v-longclick="dragOn"
   >
-    <v-list-item three-line>
+    <v-list-item three-line :class="{ urgent: task.urgent }">
       <v-list-item-content>
         <div class="mb-2 task-title" v-show="!edit">
-          {{ task ? task.title : "euh.." }}
+          {{ task.title }}
         </div>
 
         <v-textarea
@@ -16,7 +16,7 @@
           type="text"
           auto-grow
           outlined
-          :value="task.name"
+          :value="task.title"
           class="task-title"
           dense
           rows="1"
@@ -24,8 +24,7 @@
         />
 
         <div v-show="!edit" class="task-content">
-          Greyhound divisely hello coldly fonwderfully Greyhound divisely hello
-          coldly fonwderfully
+          {{ task.description }}
         </div>
 
         <v-textarea
@@ -33,7 +32,7 @@
           type="text"
           auto-grow
           outlined
-          value="Greyhound divisely hello coldly fonwderfully"
+          :value="task.description"
           class="task-content"
           dense
           rows="1"
@@ -41,7 +40,7 @@
         />
 
         <div class="overline text-right" v-show="!edit">
-          5 pts
+          {{ task.points }} pts
         </div>
 
         <v-text-field
@@ -49,7 +48,7 @@
           type="number"
           class="overline"
           outlined
-          value="5"
+          :value="task.points"
           suffix="PTS"
           dense
         />
@@ -126,5 +125,9 @@ export default {
   color: rgba(255, 255, 255, 0.7);
   line-height: 1.2;
   font-size: 1.3rem;
+}
+
+.urgent {
+  border-left: solid 5px #f44336;
 }
 </style>
