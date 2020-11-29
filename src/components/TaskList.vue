@@ -2,13 +2,15 @@
   <v-col>
     <v-list class="task-list" outlined>
       <v-subheader>{{ title }}</v-subheader>
-      <TaskItem v-for="n in 5" v-bind:key="n" :tasks="tasks" />
+      <TaskItem v-for="task in tasks" v-bind:key="task.id" :task="task" />
     </v-list>
   </v-col>
 </template>
 
 <script>
 import TaskItem from "../components/TaskItem";
+import { mapState } from "vuex";
+
 export default {
   name: "TaskList",
   components: {
@@ -20,7 +22,16 @@ export default {
   }),
   props: {
     title: String,
-    tasks: Object
+    taskCode: String
+  },
+  computed: {
+    ...mapState(["currentProject"]),
+    tasks() {
+      if (this.currentProject.tasks) {
+        return this.currentProject.tasks[this.taskCode];
+      }
+      return [];
+    }
   },
   methods: {
     dragOn() {

@@ -7,12 +7,25 @@ Vue.use(Vuex)
 
 export const GET_PROJECTS = 'GET_PROJECTS'
 export const SET_CURRENT_PROJECT = 'SET_CURRENT_PROJECT'
+export const GET_PROJECT_TASKS = 'GET_PROJECT_TASKS'
 
 export const store = new Vuex.Store({
     state: {
         projects: [],
         users: [],
-        currentProject: {}
+        currentProject: {
+            id: "",
+            name: "",
+            dateStart: "",
+            dateEnd: "",
+            tasks: {
+                toDo: [],
+                inProgress: [],
+                inTest: [],
+                done: []
+            }
+
+        },
     },
     actions: {
         getProjects({ commit }) {
@@ -30,15 +43,53 @@ export const store = new Vuex.Store({
         setCurrentProject({ commit }, payload) {
             commit(SET_CURRENT_PROJECT, payload)
         },
+        getTasksByProjectId({ commit }, payload) {
+            db.collection("projects").doc(payload).collection("tasks").onSnapshot(querySnapshot => {
+                let tasksArray = {
+                    toDo: [],
+                    inProgress: [],
+                    inTest: [],
+                    done: []
+                }
+
+                querySnapshot.forEach(doc => {
+                    let task = doc.data()
+                    task.id = doc.id
+
+                    switch (task.category) {
+                        case "toDo":
+                            tasksArray.toDo.push(task)
+                            break
+                        case "inProgress":
+                            tasksArray.inProgress.push(task)
+                            break
+                        case "inTest":
+                            tasksArray.inTest.push(task)
+                            break
+                        case "done":
+                            tasksArray.done.push(task)
+                            break
+                    }
+
+                })
+
+                commit(GET_PROJECT_TASKS, tasksArray)
+            })
+        }
     },
     mutations: {
         [GET_PROJECTS](state, payload) {
             state.projects = payload
         },
-
         [SET_CURRENT_PROJECT](state, payload) {
-            state.currentProject = payload
+            state.currentProject.id = payload.id
+            state.currentProject.name = payload.name
+            state.currentProject.dateEnd = payload.dateEnd
+            state.currentProject.dateStart = payload.dateStart
         },
+        [GET_PROJECT_TASKS](state, payload) {
+            state.currentProject.tasks = payload
+        }
 
     }
 })

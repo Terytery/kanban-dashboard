@@ -8,7 +8,7 @@
     <v-list-item three-line>
       <v-list-item-content>
         <div class="mb-2 task-title" v-show="!edit">
-          {{ tasks.name }}
+          {{ task ? task.title : "euh.." }}
         </div>
 
         <v-textarea
@@ -16,11 +16,11 @@
           type="text"
           auto-grow
           outlined
-          :value="tasks.name"
+          :value="task.name"
           class="task-title"
           dense
           rows="1"
-          placeholder="Title"
+          placeholder="Titre"
         />
 
         <div v-show="!edit" class="task-content">
@@ -74,7 +74,7 @@ export default {
     edit: false
   }),
   props: {
-    tasks: Object
+    task: Object
   },
   methods: {
     dragOn() {
