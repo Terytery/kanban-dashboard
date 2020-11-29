@@ -54,6 +54,20 @@
         />
 
         <v-switch v-if="edit" label="Urgent" color="red"></v-switch>
+
+        <v-btn
+          v-if="edit"
+          @click="deleteTask"
+          fab
+          absolute
+          dark
+          color="red"
+          elevation="0"
+          x-small
+          class="delete-task"
+        >
+          <v-icon>mdi-delete</v-icon>
+        </v-btn>
       </v-list-item-content>
 
       <v-list-item-avatar size="30" color="grey">
@@ -65,6 +79,8 @@
 
 <script>
 import ClickOutside from "vue-click-outside";
+import { mapState } from "vuex";
+import { db } from "../firebase";
 
 export default {
   name: "TaskItem",
@@ -74,6 +90,9 @@ export default {
   }),
   props: {
     task: Object
+  },
+  computed: {
+    ...mapState(["currentProject"])
   },
   methods: {
     dragOn() {
@@ -87,6 +106,13 @@ export default {
     },
     saveEditing() {
       this.edit = false;
+    },
+    deleteTask() {
+      db.collection("projects")
+        .doc(this.currentProject.id)
+        .collection("tasks")
+        .doc(this.task.id)
+        .delete();
     }
   },
   directives: {
@@ -111,10 +137,6 @@ export default {
   border-radius: 0 !important;
 }
 
-.task:hover {
-  background-color: #333;
-}
-
 .task-content {
   color: rgba(255, 255, 255, 0.7);
   line-height: 1.2;
@@ -129,5 +151,10 @@ export default {
 
 .urgent {
   border-left: solid 5px #f44336;
+}
+
+.delete-task {
+  bottom: 32px;
+  right: 16px;
 }
 </style>

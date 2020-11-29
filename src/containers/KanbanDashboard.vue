@@ -18,7 +18,7 @@
       <TaskList title="DONE" :tasks="tasks.done" />
     </v-row>
 
-    <v-btn fab fixed dark color="blue" right bottom>
+    <v-btn @click="addTask" fab fixed dark color="blue" right bottom>
       <v-icon>mdi-card-plus</v-icon>
     </v-btn>
   </v-container>
@@ -27,6 +27,7 @@
 <script>
 import TaskList from "../components/TaskList";
 import { mapState } from "vuex";
+import { db } from "../firebase";
 
 export default {
   name: "KanbanDashboard",
@@ -46,6 +47,20 @@ export default {
   methods: {
     returnToListProjects() {
       this.$store.dispatch("setCurrentProject", "");
+    },
+    addTask() {
+      const task = {
+        title: "",
+        description: "",
+        points: 0,
+        urgent: false,
+        position: 0,
+        category: "toDo"
+      };
+      db.collection("projects")
+        .doc(this.currentProject.id)
+        .collection("tasks")
+        .add(task);
     }
   }
 };
