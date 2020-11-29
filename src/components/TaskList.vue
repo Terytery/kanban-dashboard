@@ -9,7 +9,6 @@
 
 <script>
 import TaskItem from "../components/TaskItem";
-import { mapState } from "vuex";
 
 export default {
   name: "TaskList",
@@ -22,16 +21,7 @@ export default {
   }),
   props: {
     title: String,
-    taskCode: String
-  },
-  computed: {
-    ...mapState(["currentProject"]),
-    tasks() {
-      if (this.currentProject.tasks) {
-        return this.currentProject.tasks[this.taskCode];
-      }
-      return [];
-    }
+    tasks: Array
   },
   methods: {
     dragOn() {
