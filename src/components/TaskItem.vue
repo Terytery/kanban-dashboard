@@ -1,10 +1,5 @@
 <template>
-  <v-card
-    v-click-outside="saveEditing"
-    class="mx-auto task"
-    @click="editTask"
-    v-longclick="dragOn"
-  >
+  <v-card v-click-outside="saveEditing" class="mx-auto task" @click="editTask">
     <v-list-item three-line :class="{ urgent: task.urgent }">
       <v-list-item-content>
         <div class="mb-2 task-title" v-show="!edit">
@@ -112,7 +107,6 @@ import { db } from "../firebase";
 export default {
   name: "TaskItem",
   data: () => ({
-    draggingElement: false,
     edit: false,
     modalAvatar: false,
     dialogm1: ""
@@ -125,14 +119,8 @@ export default {
     ...mapState(["users"])
   },
   methods: {
-    dragOn() {
-      this.draggingElement = true;
-      console.log("Drag and drop");
-    },
     editTask() {
-      if (!this.draggingElement) {
-        this.edit = true;
-      }
+      this.edit = true;
     },
     saveEditing() {
       db.collection("projects")

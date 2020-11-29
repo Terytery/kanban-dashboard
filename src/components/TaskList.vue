@@ -2,25 +2,29 @@
   <v-col>
     <v-list class="task-list" outlined>
       <v-subheader>{{ title }}</v-subheader>
-      <TaskItem
-        v-for="task in orderedTasks"
-        v-bind:key="task.id"
-        :task="task"
-      />
+      <draggable group="tasks" v-model="orderedTasks" class="draggable-test">
+        <TaskItem
+          v-for="task in orderedTasks"
+          v-bind:key="task.id"
+          :task="task"
+        />
+      </draggable>
     </v-list>
   </v-col>
 </template>
 
 <script>
 import TaskItem from "../components/TaskItem";
-
-import { mapState } from "vuex";
 import _ from "lodash";
+import draggable from "vuedraggable";
+import { db } from "../firebase";
+import { mapState } from "vuex";
 
 export default {
   name: "TaskList",
   components: {
-    TaskItem
+    TaskItem,
+    draggable
   },
   data: () => ({
     draggingElement: false,
@@ -31,25 +35,32 @@ export default {
   }),
   props: {
     title: String,
-    tasks: Array
+    tasks: Array,
+    category: String
   },
   computed: {
-    orderedTasks() {
-      return _.orderBy(this.tasks, "position");
-    },
-    ...mapState(["users"])
-  },
-  methods: {
-    dragOn() {
-      this.draggingElement = true;
-      console.log("Drag and drop");
-    },
-    editTask() {
-      if (!this.draggingElement) {
-        this.edit = true;
+    ...mapState(["currentProject"]),
+    orderedTasks: {
+      get() {
+        return _.orderBy(this.tasks, "position");
+      },
+      set(tasks) {
+        let i = 0;
+        tasks.forEach(task => {
+          task.position = i;
+          task.category = this.category;
+
+          db.collection("projects")
+            .doc(this.currentProject.id)
+            .collection("tasks")
+            .doc(task.id)
+            .set(task);
+          i++;
+        });
       }
     }
-  }
+  },
+  methods: {}
 };
 </script>
 
@@ -71,5 +82,9 @@ export default {
 
 .task:hover {
   background-color: #333;
+}
+
+.draggable-test {
+  height: 100%;
 }
 </style>
