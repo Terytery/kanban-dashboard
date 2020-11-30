@@ -71,7 +71,7 @@
       </v-list-item-content>
 
       <v-list-item-avatar @click="changeUser" size="30" :color="userColor">
-        <span class="white--text body-2">{{ userInitials }}</span>
+        <span :class="`${textUserColor}--text body-2`">{{ userInitials }}</span>
       </v-list-item-avatar>
     </v-list-item>
   </v-card>
@@ -104,9 +104,17 @@ export default {
     },
     userColor() {
       if (this.task.inCharge) {
-        return stc(this.task.inCharge);
+        const backgrounColor = stc(this.task.inCharge);
+        return backgrounColor;
       }
       return "grey";
+    },
+    textUserColor() {
+      const r = parseInt(this.userColor.substr(1, 2), 16);
+      const g = parseInt(this.userColor.substr(3, 2), 16);
+      const b = parseInt(this.userColor.substr(5, 2), 16);
+      const brightness = (r * 299 + g * 587 + b * 114) / 1000;
+      return brightness >= 150 ? "black" : "white";
     }
   },
   methods: {
