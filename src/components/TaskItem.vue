@@ -70,7 +70,7 @@
         </v-btn>
       </v-list-item-content>
 
-      <v-list-item-avatar @click="changeUser" size="30" color="grey">
+      <v-list-item-avatar @click="changeUser" size="30" :color="userColor">
         <span class="white--text body-2">{{ userInitials }}</span>
       </v-list-item-avatar>
     </v-list-item>
@@ -100,6 +100,13 @@ export default {
           .join("");
       }
       return "";
+    },
+    userColor() {
+      if (this.task.inCharge) {
+        const stc = require("string-to-color");
+        return stc(this.task.inCharge);
+      }
+      return "grey";
     }
   },
   methods: {
