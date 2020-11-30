@@ -70,8 +70,8 @@
         </v-btn>
       </v-list-item-content>
 
-      <v-list-item-avatar size="30" color="grey">
-        <span class="white--text body-2">RB</span>
+      <v-list-item-avatar @click="changeUser" size="30" color="grey">
+        <span class="white--text body-2">{{ userInitials }}</span>
       </v-list-item-avatar>
     </v-list-item>
   </v-card>
@@ -91,7 +91,16 @@ export default {
     task: Object
   },
   computed: {
-    ...mapState(["currentProject"])
+    ...mapState(["currentProject"]),
+    userInitials() {
+      if (this.task.inCharge) {
+        return this.task.inCharge
+          .split(" ")
+          .map(n => n[0])
+          .join("");
+      }
+      return "";
+    }
   },
   methods: {
     editTask() {
@@ -112,6 +121,9 @@ export default {
         .collection("tasks")
         .doc(this.task.id)
         .delete();
+    },
+    changeUser() {
+      this.$emit("changeUser", this.task);
     }
   },
   directives: {
