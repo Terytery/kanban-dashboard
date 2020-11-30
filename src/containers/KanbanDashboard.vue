@@ -9,22 +9,64 @@
     <p class="overline text-center">Liste des tâches</p>
 
     <v-row>
-      <TaskList title="TO DO" category="toDo" :tasks="tasks.toDo" />
+      <TaskList
+        title="TO DO"
+        category="toDo"
+        :tasks="tasks.toDo"
+        @changeUser="openModalUser"
+      />
 
       <TaskList
         title="IN PROGRESS"
         category="inProgress"
         :tasks="tasks.inProgress"
+        @changeUser="openModalUser"
       />
 
-      <TaskList title="IN TEST" category="inTest" :tasks="tasks.inTest" />
+      <TaskList
+        title="IN TEST"
+        category="inTest"
+        :tasks="tasks.inTest"
+        @changeUser="openModalUser"
+      />
 
-      <TaskList title="DONE" category="done" :tasks="tasks.done" />
+      <TaskList
+        title="DONE"
+        category="done"
+        :tasks="tasks.done"
+        @changeUser="openModalUser"
+      />
     </v-row>
 
     <v-btn @click="addTask" fab fixed dark color="blue" right bottom>
       <v-icon>mdi-card-plus</v-icon>
     </v-btn>
+
+    <v-dialog v-model="modalUser" scrollable max-width="300px">
+      <v-card>
+        <v-card-title>Responsable</v-card-title>
+        <v-divider></v-divider>
+        <v-card-text>
+          <v-radio-group v-model="modalUserTask.inCharge" column>
+            <v-radio
+              v-for="user in users"
+              :key="user.id"
+              :label="user.name"
+              :value="user.name"
+            ></v-radio>
+          </v-radio-group>
+        </v-card-text>
+        <v-divider></v-divider>
+        <v-card-actions>
+          <v-btn color="error" text @click="modalUser = false">
+            FERMER
+          </v-btn>
+          <v-btn color="blue" text @click="confirmModalUser">
+            SAUVEGARDER
+          </v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
   </v-container>
 </template>
 
@@ -38,12 +80,18 @@ export default {
   components: {
     TaskList
   },
-  data: () => ({}),
+  data: () => ({
+    modalUser: false,
+    modalUserTask: {
+      isInCharge: ""
+    }
+  }),
   created() {
     this.$store.dispatch("getTasksByProjectId", this.currentProject.id);
+    this.$store.dispatch("getUsers");
   },
   computed: {
-    ...mapState(["currentProject"]),
+    ...mapState(["currentProject", "users"]),
     tasks() {
       return this.currentProject.tasks;
     }
@@ -65,6 +113,21 @@ export default {
         .doc(this.currentProject.id)
         .collection("tasks")
         .add(task);
+    },
+    openModalUser(task) {
+      this.modalUser = true;
+      this.modalUserTask = Object.assign({}, task);
+    },
+    confirmModalUser() {
+      setTimeout(() => {
+        db.collection("projects")
+          .doc(this.currentProject.id)
+          .collection("tasks")
+          .doc(this.modalUserTask.id)
+          .update(this.modalUserTask);
+
+        this.modalUser = false;
+      }, 100);
     }
   }
 };

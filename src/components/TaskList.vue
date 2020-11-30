@@ -7,6 +7,7 @@
           v-for="task in orderedTasks"
           v-bind:key="task.id"
           :task="task"
+          @changeUser="changeUser"
         />
       </draggable>
     </v-list>
@@ -57,7 +58,11 @@ export default {
       }
     }
   },
-  methods: {}
+  methods: {
+    changeUser(task) {
+      this.$emit("changeUser", task);
+    }
+  }
 };
 </script>
 

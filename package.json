@@ -10,6 +10,7 @@
   "dependencies": {
     "core-js": "^3.6.5",
     "firebase": "^8.1.1",
+    "string-to-color": "^2.2.2",
     "vue": "^2.6.11",
     "vue-click-outside": "^1.1.0",
     "vuedraggable": "^2.24.3",
