@@ -81,6 +81,7 @@
 import ClickOutside from "vue-click-outside";
 import { mapState } from "vuex";
 import { db } from "../firebase";
+import stc from "string-to-color";
 
 export default {
   name: "TaskItem",
@@ -103,7 +104,6 @@ export default {
     },
     userColor() {
       if (this.task.inCharge) {
-        const stc = require("string-to-color");
         return stc(this.task.inCharge);
       }
       return "grey";
