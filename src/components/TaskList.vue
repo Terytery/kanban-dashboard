@@ -44,7 +44,7 @@ export default {
       },
       set(tasks) {
         let i = 0;
-        tasks.forEach(task => {
+        tasks.forEach((task) => {
           task.position = i;
           task.category = this.category;
 

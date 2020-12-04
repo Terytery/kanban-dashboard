@@ -56,6 +56,20 @@
         ></v-switch>
 
         <v-btn
+          @click="deleteTask"
+          v-if="!edit"
+          fab
+          absolute
+          dark
+          color="red"
+          elevation="0"
+          x-small
+          class="before-delete-task"
+        >
+          <v-icon>mdi-delete</v-icon>
+        </v-btn>
+
+        <v-btn
           v-if="edit"
           @click="deleteTask"
           fab
@@ -97,7 +111,7 @@ export default {
       if (this.task.inCharge) {
         return this.task.inCharge
           .split(" ")
-          .map(n => n[0])
+          .map((n) => n[0])
           .join("");
       }
       return "";
@@ -182,5 +196,9 @@ export default {
 .delete-task {
   bottom: 32px;
   right: 16px;
+}
+.before-delete-task {
+  bottom: 7px;
+  left: 10px;
 }
 </style>
