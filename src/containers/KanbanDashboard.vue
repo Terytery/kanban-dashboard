@@ -101,7 +101,6 @@ export default {
       let totalTask = 0;
       Object.values(this.tasks).forEach((task) => {
         totalTask += task.length;
-        console.log(task.length);
       });
       if (this.tasks.done.length == 0) {
         return 0;
