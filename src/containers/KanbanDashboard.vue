@@ -3,11 +3,15 @@
     <v-btn @click="returnToListProjects" text fixed dark color="white" left top>
       <v-icon>mdi-arrow-left</v-icon>
     </v-btn>
-
     <h1 class="text-center">{{ currentProject.name }}</h1>
 
     <p class="overline text-center">Liste des tâches</p>
-
+    <v-progress-linear
+      :value="countRemainingTask"
+      height="10"
+      striped
+      color="deep-orange"
+    ></v-progress-linear>
     <v-row>
       <TaskList
         title="TO DO"
@@ -58,9 +62,7 @@
         </v-card-text>
         <v-divider></v-divider>
         <v-card-actions>
-          <v-btn color="error" text @click="modalUser = false">
-            FERMER
-          </v-btn>
+          <v-btn color="error" text @click="modalUser = false"> FERMER </v-btn>
           <v-btn color="blue" text @click="confirmModalUser">
             SAUVEGARDER
           </v-btn>
@@ -94,6 +96,18 @@ export default {
     ...mapState(["currentProject", "users"]),
     tasks() {
       return this.currentProject.tasks;
+    },
+    countRemainingTask() {
+      let totalTask = 0;
+      Object.values(this.tasks).forEach((task) => {
+        totalTask += task.length;
+        console.log(task.length);
+      });
+      if (this.tasks.done.length == 0) {
+        return 0;
+      } else {
+        return Math.round((this.tasks.done.length / totalTask) * 100);
+      }
     }
   },
   methods: {
@@ -132,3 +146,12 @@ export default {
   }
 };
 </script>
+
+
+<style scoped>
+.pg-bar {
+  position: absolute;
+  top: 8px;
+  right: 70px;
+}
+</style>

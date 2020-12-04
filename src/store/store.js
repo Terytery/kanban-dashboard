@@ -15,6 +15,7 @@ export const store = new Vuex.Store({
     state: {
         projects: [],
         users: [],
+
         currentProject: {
             id: "",
             name: "",
@@ -65,9 +66,8 @@ export const store = new Vuex.Store({
                     toDo: [],
                     inProgress: [],
                     inTest: [],
-                    done: []
+                    done: [],
                 }
-
                 querySnapshot.forEach(doc => {
                     let task = doc.data()
                     task.id = doc.id
@@ -86,9 +86,7 @@ export const store = new Vuex.Store({
                             tasksArray.done.push(task)
                             break
                     }
-
                 })
-
                 commit(GET_PROJECT_TASKS, tasksArray)
             })
         },
