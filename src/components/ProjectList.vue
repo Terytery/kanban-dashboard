@@ -15,17 +15,6 @@
           <AddProject />
         </v-toolbar>
       </template>
-
-      <template v-slot:[`item.progress`]>
-        <td @click.stop>
-          <v-progress-circular
-            value="50"
-            rotate="-90"
-            color="deep-orange lighten-2s"
-          ></v-progress-circular>
-        </td>
-      </template>
-
       <template v-slot:[`item.actions`]="{ item }">
         <td @click.stop>
           <v-icon small class="mr-2" @click="confirmEdit(item)">
@@ -138,7 +127,6 @@ export default {
       },
       { text: "Date de départ", value: "dateStart" },
       { text: "Date de fin", value: "dateEnd" },
-      { text: "Progression", value: "progress", sortable: false },
       { text: "Actions", value: "actions", sortable: false }
     ],
     nameRules: [
