@@ -10,7 +10,7 @@
       :value="countRemainingTask"
       height="10"
       striped
-      color="deep-orange"
+      :color="progressBarSucess"
     ></v-progress-linear>
     <v-row>
       <TaskList
@@ -107,6 +107,12 @@ export default {
       } else {
         return Math.round((this.tasks.done.length / totalTask) * 100);
       }
+    },
+    progressBarSucess() {
+      if (this.countRemainingTask == 100) {
+        return "#4caf50";
+      }
+      return "#ff5722";
     }
   },
   methods: {

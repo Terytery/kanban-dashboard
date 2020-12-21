@@ -15,7 +15,6 @@
           <AddProject />
         </v-toolbar>
       </template>
-
       <template v-slot:[`item.actions`]="{ item }">
         <td @click.stop>
           <v-icon small class="mr-2" @click="confirmEdit(item)">

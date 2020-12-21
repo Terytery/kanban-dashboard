@@ -61,7 +61,6 @@
           fab
           absolute
           dark
-          color="red"
           elevation="0"
           x-small
           class="before-delete-task"
