@@ -109,8 +109,9 @@ export default {
     userInitials() {
       if (this.task.inCharge) {
         return this.task.inCharge
+          .toString()
           .split(" ")
-          .map((n) => n[0])
+          .map(n => n[0])
           .join("");
       }
       return "";
