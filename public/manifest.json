@@ -1,0 +1,37 @@
+{
+    "name": "Kanban dashboard",
+    "short_name": "Kandash",
+    "start_url": "./",
+    "display": "standalone",
+    "scope": "./",
+    "background_color": "#1e1e1e",
+    "theme_color": "#1e1e1e",
+    "icons": [
+        {
+            "src": "img/icons/144x144.png",
+            "type": "image/png",
+            "sizes": "144x144"
+        },
+        {
+            "src": "img/icons/192x192.png",
+            "type": "image/png",
+            "sizes": "192x192"
+        },
+        {
+            "src": "img/icons/512x512.png",
+            "type": "image/png",
+            "sizes": "512x512"
+        },
+        {
+            "src": "img/icons/1024x1024.png",
+            "type": "image/png",
+            "sizes": "1024x1024"
+        },
+        {
+            "src": "img/icons/1024x1024.png",
+            "type": "image/png",
+            "sizes": "1024x1024",
+            "purpose": "maskable"
+        }
+    ]
+}
