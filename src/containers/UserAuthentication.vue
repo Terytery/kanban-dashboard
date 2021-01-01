@@ -2,7 +2,7 @@
   <v-container>
     <v-row justify="center">
       <h1 class="title-project mb-5">Kanban dashboard</h1>
-      <v-card outlined>
+      <v-card outlined class="ma-5">
         <v-card-title>Connexion au dashboard</v-card-title>
 
         <v-card-text>
