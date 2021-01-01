@@ -150,6 +150,7 @@ export default {
   methods: {
     openProject(project) {
       this.$store.dispatch("setCurrentProject", project);
+      this.$router.push("/projet/" + project.id);
     },
     confirmEdit(item) {
       this.projectToEdit = Object.assign({}, item);

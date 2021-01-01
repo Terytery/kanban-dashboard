@@ -1,9 +1,11 @@
 <template>
   <v-app>
     <v-main>
-      <KanbanDashboard v-if="currentProject.id" />
+      <router-view>
+        <KanbanDashboard v-if="currentProject.id" />
 
-      <ProjectsContainer v-else />
+        <ProjectsContainer v-else
+      /></router-view>
     </v-main>
   </v-app>
 </template>

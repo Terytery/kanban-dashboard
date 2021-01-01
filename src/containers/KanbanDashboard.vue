@@ -118,6 +118,7 @@ export default {
   methods: {
     returnToListProjects() {
       this.$store.dispatch("removeCurrentProject");
+      this.$router.push("/");
     },
     addTask() {
       const task = {
