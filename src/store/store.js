@@ -10,6 +10,7 @@ export const SET_CURRENT_PROJECT = 'SET_CURRENT_PROJECT'
 export const REMOVE_CURRENT_PROJECT = 'REMOVE_CURRENT_PROJECT'
 export const GET_PROJECT_TASKS = 'GET_PROJECT_TASKS'
 export const GET_USERS = 'GET_USERS'
+export const CONNECT_USER = 'CONNECT_USER'
 
 export const store = new Vuex.Store({
     state: {
@@ -27,7 +28,13 @@ export const store = new Vuex.Store({
                 inTest: [],
                 done: []
             }
+        },
+        connectedUser: {
+            tokenId: "",
+            userId: "",
+            name: ""
         }
+
     },
     actions: {
         getProjects({ commit }) {
@@ -102,6 +109,31 @@ export const store = new Vuex.Store({
                 commit(GET_USERS, userArray)
             })
         },
+        connectUser({ commit }, payload) {
+            let user = {
+                tokenId: payload.idToken,
+                userId: payload.localId
+            }
+            db.collection("users").doc(payload.localId).get().then(function (doc) {
+                if (doc.exists) {
+                    user.name = doc.data().name
+                    commit(CONNECT_USER, user)
+                } else {
+                    console.log("No such document!")
+                }
+            }).catch(function (error) {
+                console.log("Error getting document:", error)
+            })
+
+        },
+        connectGuest({ commit }) {
+            let user = {
+                tokenId: "guest",
+                userId: "guest",
+                name: "Invité"
+            }
+            commit(CONNECT_USER, user)
+        }
     },
     mutations: {
         [GET_PROJECTS](state, payload) {
@@ -121,6 +153,9 @@ export const store = new Vuex.Store({
         },
         [GET_USERS](state, payload) {
             state.users = payload
+        },
+        [CONNECT_USER](state, payload) {
+            state.connectedUser = payload
         }
     }
 })
