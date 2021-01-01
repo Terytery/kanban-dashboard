@@ -48,22 +48,29 @@ export default {
   }),
   methods: {
     connectUser() {
-      axios
-        .post(
-          "https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyBLiJ4yXBbS0sg_okZvRbDLvrYZ0qVMEDA",
-          {
-            email: this.email,
-            password: this.password,
-            returnSecureToken: true
-          }
-        )
-        .then(response => {
-          this.$store.dispatch("connectUser", response.data);
-        })
-        .catch(() => (this.wrongCredentials = true));
+      if (this.email && this.password) {
+        axios
+          .post(
+            "https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyBLiJ4yXBbS0sg_okZvRbDLvrYZ0qVMEDA",
+            {
+              email: this.email,
+              password: this.password,
+              returnSecureToken: true
+            }
+          )
+          .then(response => {
+            this.$store.dispatch("connectUser", response.data);
+          })
+          .catch(() => (this.wrongCredentials = true));
+      }
     },
     connectAsGuest() {
-      this.$store.dispatch("connectGuest");
+      let user = {
+        tokenId: "guest",
+        userId: "guest",
+        name: "Invité"
+      };
+      this.$store.dispatch("setConnectedUser", user);
     }
   }
 };

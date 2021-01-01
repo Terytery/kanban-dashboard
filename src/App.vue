@@ -4,6 +4,8 @@
       <UserAuthentication v-if="!connectedUser.tokenId" />
 
       <template v-else>
+        <DisconnectUser />
+
         <KanbanDashboard v-if="currentProject.id" />
 
         <ProjectsContainer v-else />
@@ -16,6 +18,7 @@
 import ProjectsContainer from "./containers/ProjectsContainer";
 import KanbanDashboard from "./containers/KanbanDashboard";
 import UserAuthentication from "./containers/UserAuthentication";
+import DisconnectUser from "./components/DisconnectUser";
 import { mapState } from "vuex";
 
 export default {
@@ -24,12 +27,21 @@ export default {
   components: {
     ProjectsContainer,
     KanbanDashboard,
-    UserAuthentication
+    UserAuthentication,
+    DisconnectUser
   },
 
   data: () => ({
     //
   }),
+  created() {
+    if (localStorage.connectedUser) {
+      let connectedUser = JSON.parse(localStorage.connectedUser);
+      if (connectedUser.userId && connectedUser.userId !== "guest") {
+        this.$store.dispatch("setConnectedUser", connectedUser);
+      }
+    }
+  },
   computed: {
     ...mapState(["currentProject", "connectedUser"])
   }

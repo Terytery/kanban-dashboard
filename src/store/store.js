@@ -126,13 +126,8 @@ export const store = new Vuex.Store({
             })
 
         },
-        connectGuest({ commit }) {
-            let user = {
-                tokenId: "guest",
-                userId: "guest",
-                name: "Invité"
-            }
-            commit(CONNECT_USER, user)
+        setConnectedUser({ commit }, payload) {
+            commit(CONNECT_USER, payload)
         }
     },
     mutations: {
@@ -155,6 +150,7 @@ export const store = new Vuex.Store({
             state.users = payload
         },
         [CONNECT_USER](state, payload) {
+            localStorage.connectedUser = JSON.stringify(payload)
             state.connectedUser = payload
         }
     }
