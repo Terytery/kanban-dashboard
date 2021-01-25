@@ -10,6 +10,7 @@ export const SET_CURRENT_PROJECT = 'SET_CURRENT_PROJECT'
 export const REMOVE_CURRENT_PROJECT = 'REMOVE_CURRENT_PROJECT'
 export const GET_PROJECT_TASKS = 'GET_PROJECT_TASKS'
 export const GET_USERS = 'GET_USERS'
+export let unsubscribe
 
 export const store = new Vuex.Store({
     state: {
@@ -46,6 +47,8 @@ export const store = new Vuex.Store({
             commit(SET_CURRENT_PROJECT, payload)
         },
         removeCurrentProject({ commit }) {
+            unsubscribe()
+
             const emptyProject = {
                 id: "",
                 name: "",
@@ -61,7 +64,7 @@ export const store = new Vuex.Store({
             commit(REMOVE_CURRENT_PROJECT, emptyProject)
         },
         getTasksByProjectId({ commit }, payload) {
-            db.collection("projects").doc(payload).collection("tasks").onSnapshot(querySnapshot => {
+            unsubscribe = db.collection("projects").doc(payload).collection("tasks").onSnapshot(querySnapshot => {
                 let tasksArray = {
                     toDo: [],
                     inProgress: [],
