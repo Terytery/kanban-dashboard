@@ -6,6 +6,7 @@ import { store } from './store/store'
 import './firebase'
 
 import './assets/css/global.css'
+import './registerServiceWorker'
 
 Vue.config.productionTip = false
 Vue.use(Vuex)
