@@ -136,13 +136,15 @@ export default {
       this.edit = true;
     },
     saveEditing() {
-      db.collection("projects")
-        .doc(this.currentProject.id)
-        .collection("tasks")
-        .doc(this.task.id)
-        .set(this.task);
+      if (this.edit) {
+        db.collection("projects")
+          .doc(this.currentProject.id)
+          .collection("tasks")
+          .doc(this.task.id)
+          .set(this.task);
 
-      this.edit = false;
+        this.edit = false;
+      }
     },
     deleteTask() {
       db.collection("projects")
