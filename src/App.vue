@@ -20,10 +20,13 @@ export default {
     ProjectsContainer,
     KanbanDashboard
   },
-
   data: () => ({
     //
   }),
+  created() {
+    this.$store.dispatch("getProjects");
+    this.$store.dispatch("getUsers");
+  },
   computed: {
     ...mapState(["currentProject"])
   }

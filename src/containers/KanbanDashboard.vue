@@ -90,7 +90,6 @@ export default {
   }),
   created() {
     this.$store.dispatch("getTasksByProjectId", this.currentProject.id);
-    this.$store.dispatch("getUsers");
   },
   computed: {
     ...mapState(["currentProject", "users"]),
@@ -99,7 +98,7 @@ export default {
     },
     countRemainingTask() {
       let totalTask = 0;
-      Object.values(this.tasks).forEach((task) => {
+      Object.values(this.tasks).forEach(task => {
         totalTask += task.length;
       });
       if (this.tasks.done.length == 0) {

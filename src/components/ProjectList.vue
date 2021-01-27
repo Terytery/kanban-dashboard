@@ -130,19 +130,15 @@ export default {
       { text: "Actions", value: "actions", sortable: false }
     ],
     nameRules: [
-      (v) => !!v || "Le nom est obligatoire",
-      (v) => /\w/.test(v) || "Le nom est invalide"
+      v => !!v || "Le nom est obligatoire",
+      v => /\w/.test(v) || "Le nom est invalide"
     ],
-    dateDebRules: [(v) => !!v || "La date est obligatoire"],
+    dateDebRules: [v => !!v || "La date est obligatoire"],
     modalDeleteConfirm: false,
     modalEditProject: false,
     projectToEdit: {},
     projectToDelete: {}
   }),
-  mounted() {
-    this.$store.dispatch("getProjects");
-  },
-
   computed: {
     ...mapState(["projects"])
   },
@@ -160,7 +156,9 @@ export default {
         this.$refs.form.resetValidation();
         this.modalEditProject = false;
         this.projectToEdit = {};
-        db.collection("projects").doc(item.id).update(item);
+        db.collection("projects")
+          .doc(item.id)
+          .update(item);
       } else {
         this.modalEditProject = true;
       }
@@ -171,7 +169,9 @@ export default {
     },
     deleteProject(item) {
       this.modalDeleteConfirm = false;
-      db.collection("projects").doc(item).delete();
+      db.collection("projects")
+        .doc(item)
+        .delete();
     }
   }
 };
