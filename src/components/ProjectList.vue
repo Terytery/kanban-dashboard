@@ -12,10 +12,10 @@
         <v-toolbar flat>
           <v-toolbar-title>Liste des projets</v-toolbar-title>
           <v-spacer></v-spacer>
-          <AddProject />
+          <AddProject v-if="!isGuest" />
         </v-toolbar>
       </template>
-      <template v-slot:[`item.actions`]="{ item }">
+      <template v-slot:[`item.actions`]="{ item }" v-if="!isGuest">
         <td @click.stop>
           <v-icon small class="mr-2" @click="confirmEdit(item)">
             mdi-pencil</v-icon
@@ -47,7 +47,7 @@
                     v-model="projectToEdit.dateStart"
                     label="Date de début*"
                     type="date"
-                    :rules="dateDebRules"
+                    :rules="dateStartRules"
                   ></v-text-field>
                 </v-col>
                 <v-col cols="12" sm="6" md="4">
@@ -133,16 +133,18 @@ export default {
       v => !!v || "Le nom est obligatoire",
       v => /\w/.test(v) || "Le nom est invalide"
     ],
-    dateDebRules: [v => !!v || "La date est obligatoire"],
+    dateStartRules: [v => !!v || "La date est obligatoire"],
     modalDeleteConfirm: false,
     modalEditProject: false,
     projectToEdit: {},
     projectToDelete: {}
   }),
   computed: {
-    ...mapState(["projects"])
+    ...mapState(["projects", "connectedUser"]),
+    isGuest() {
+      return this.connectedUser.tokenId === "guest";
+    }
   },
-
   methods: {
     openProject(project) {
       this.$store.dispatch("setCurrentProject", project);

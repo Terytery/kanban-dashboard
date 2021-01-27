@@ -1,0 +1,92 @@
+<template>
+  <v-container>
+    <v-row justify="center">
+      <h1 class="title-project mb-5">Kanban dashboard</h1>
+      <v-card outlined class="ma-5">
+        <v-card-title>Connexion au dashboard</v-card-title>
+
+        <v-card-text>
+          <v-text-field
+            label="Email"
+            type="text"
+            v-model="email"
+          ></v-text-field>
+
+          <v-text-field
+            v-model="password"
+            :append-icon="showPassword ? 'mdi-eye' : 'mdi-eye-off'"
+            :type="showPassword ? 'text' : 'password'"
+            label="Mot de passe"
+            @click:append="showPassword = !showPassword"
+          ></v-text-field>
+
+          <p v-if="wrongCredentials" class="red--text">
+            <span>Mauvais email ou mot de passe</span>
+          </p>
+        </v-card-text>
+
+        <v-card-actions>
+          <v-btn color="primary" rounded elevation="0" @click="connectUser()">
+            Connexion
+          </v-btn>
+
+          <v-btn text rounded @click="connectAsGuest()">
+            Continuer en invité
+          </v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-row>
+  </v-container>
+</template>
+
+<script>
+import axios from "axios";
+
+export default {
+  name: "UserAuthentication",
+  data: () => ({
+    email: "",
+    password: "",
+    wrongCredentials: false,
+    showPassword: false
+  }),
+  methods: {
+    connectUser() {
+      if (this.email && this.password) {
+        axios
+          .post(
+            "https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyBLiJ4yXBbS0sg_okZvRbDLvrYZ0qVMEDA",
+            {
+              email: this.email,
+              password: this.password,
+              returnSecureToken: true
+            }
+          )
+          .then(response => {
+            this.$store.dispatch("connectUser", response.data);
+          })
+          .catch(() => {
+            this.wrongCredentials = true;
+            this.email = "";
+            this.password = "";
+          });
+      }
+    },
+    connectAsGuest() {
+      let user = {
+        tokenId: "guest",
+        userId: "guest",
+        name: "Invité"
+      };
+      this.$store.dispatch("setConnectedUser", user);
+    }
+  }
+};
+</script>
+
+<style scoped>
+.title-project {
+  width: 100%;
+  text-align: center;
+}
+</style>

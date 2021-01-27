@@ -2,7 +2,21 @@
   <v-col>
     <v-list class="task-list" outlined>
       <v-subheader>{{ title }}</v-subheader>
-      <draggable group="tasks" v-model="orderedTasks" class="draggable-test">
+      <template v-if="isGuest">
+        <TaskItem
+          v-for="task in orderedTasks"
+          v-bind:key="task.id"
+          :task="task"
+          @changeUser="changeUser"
+        />
+      </template>
+
+      <draggable
+        v-else
+        group="tasks"
+        v-model="orderedTasks"
+        class="draggable-test"
+      >
         <TaskItem
           v-for="task in orderedTasks"
           v-bind:key="task.id"
@@ -37,14 +51,14 @@ export default {
     category: String
   },
   computed: {
-    ...mapState(["currentProject"]),
+    ...mapState(["currentProject", "connectedUser"]),
     orderedTasks: {
       get() {
         return _.orderBy(this.tasks, "position");
       },
       set(tasks) {
         let i = 0;
-        tasks.forEach((task) => {
+        tasks.forEach(task => {
           task.position = i;
           task.category = this.category;
 
@@ -56,6 +70,9 @@ export default {
           i++;
         });
       }
+    },
+    isGuest() {
+      return this.connectedUser.tokenId === "guest";
     }
   },
   methods: {

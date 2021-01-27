@@ -42,11 +42,20 @@
       />
     </v-row>
 
-    <v-btn @click="addTask" fab fixed dark color="blue" right bottom>
+    <v-btn
+      @click="addTask"
+      v-if="!isGuest"
+      fab
+      fixed
+      dark
+      color="blue"
+      right
+      bottom
+    >
       <v-icon>mdi-card-plus</v-icon>
     </v-btn>
 
-    <v-dialog v-model="modalUser" scrollable max-width="300px">
+    <v-dialog v-if="!isGuest" v-model="modalUser" scrollable max-width="300px">
       <v-card>
         <v-card-title>Responsable</v-card-title>
         <v-divider></v-divider>
@@ -92,7 +101,7 @@ export default {
     this.$store.dispatch("getTasksByProjectId", this.currentProject.id);
   },
   computed: {
-    ...mapState(["currentProject", "users"]),
+    ...mapState(["currentProject", "users", "connectedUser"]),
     tasks() {
       return this.currentProject.tasks;
     },
@@ -112,6 +121,9 @@ export default {
         return "#4caf50";
       }
       return "#ff5722";
+    },
+    isGuest() {
+      return this.connectedUser.tokenId === "guest";
     }
   },
   methods: {
