@@ -19,6 +19,10 @@
             label="Mot de passe"
             @click:append="showPassword = !showPassword"
           ></v-text-field>
+
+          <p v-if="wrongCredentials" class="red--text">
+            <span>Mauvais email ou mot de passe</span>
+          </p>
         </v-card-text>
 
         <v-card-actions>
@@ -61,7 +65,11 @@ export default {
           .then(response => {
             this.$store.dispatch("connectUser", response.data);
           })
-          .catch(() => (this.wrongCredentials = true));
+          .catch(() => {
+            this.wrongCredentials = true;
+            this.email = "";
+            this.password = "";
+          });
       }
     },
     connectAsGuest() {

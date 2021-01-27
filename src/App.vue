@@ -35,6 +35,9 @@ export default {
     //
   }),
   created() {
+    this.$store.dispatch("getProjects");
+    this.$store.dispatch("getUsers");
+
     if (localStorage.connectedUser) {
       let connectedUser = JSON.parse(localStorage.connectedUser);
       if (connectedUser.userId && connectedUser.userId !== "guest") {
