@@ -30,7 +30,6 @@ export default {
     UserAuthentication,
     DisconnectUser
   },
-
   data: () => ({
     //
   }),
